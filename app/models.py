@@ -10,13 +10,13 @@ class Category(models.Model):
 class Item(models.Model):
     name = models.CharField(max_length=150)
     description = models.TextField()
-    price = models.DecimalField(decimal_places=2,max_digits=6)
+    price = models.DecimalField(decimal_places=2, max_digits=6)
     image = models.ImageField(upload_to="items")
 
 
 class CartItem(models.Model):
-    cart = models.ForeignKey('Cart',on_delete=models.CASCADE)
-    item = models.ForeignKey(Item,related_name='cart_item', on_delete=models.CASCADE)
+    cart = models.ForeignKey('Cart', on_delete=models.CASCADE)
+    item = models.ForeignKey(Item, related_name='cart_item', on_delete=models.CASCADE)
     quantity = models.IntegerField()
 
 
@@ -28,7 +28,7 @@ class Cart(models.Model):
 class Service(models.Model):
     name = models.CharField(max_length=150)
     description = models.TextField()
-    price = models.DecimalField(decimal_places=2,max_digits=6)
+    price = models.DecimalField(decimal_places=2, max_digits=6)
 
 
 class UserProfile(models.Model):

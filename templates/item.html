@@ -1,0 +1,25 @@
+{% extends 'base_item.html' %}
+{% block item_content %}
+{% load static %}
+    <div class="bg-info">
+        <h1>{{ item.name}}</h1>
+        <div class="d-flex">
+            <div><img src="{{ item.image.url }}"
+                 alt="" height="150"></div>
+          <div> info
+              <form action="" method="post">
+                  {% csrf_token %}
+                  <label for="">Количествo: </label>
+                  <input type="number" name="quantity" class="form-input">
+                      <button class="btn btn-danger"> Добавить в корзину</button>
+              </form>
+
+
+          </div>
+
+        </div>
+
+      <div>{{ item.description }}</div>
+
+    </div>
+{% endblock %}
