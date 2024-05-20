@@ -1,0 +1,37 @@
+{% extends 'Main.html' %}
+{% block content %}
+    {% load static %}
+    <div class="container ">
+        <div class="row">
+            <div class=" p-3 shadow" style="">
+                <h1>Ваши заказы</h1>
+                <table class="table">
+                    <thead>
+                    <th>№ Заказа</th>
+                    <th>Адрес заказа</th>
+                    <th>Дата заказа</th>
+                    <th>Статус заказа</th>
+                    </thead>
+                    <tbody>
+                    <style>
+                        a {
+                            text-decoration: none;
+                        }
+                    </style>
+                    {% for order in orders %}
+                        <tr>
+                            <td><a href="{% url "order" id=order.id %}">{{ order.pk }}</a></td>
+                            <td><a href="{% url "order" id=order.id %}">{{ order.address }}</a></td>
+                            <td><a href="{% url "order" id=order.id %}">{{ order.date }}</a></td>
+                            <td><a href="{% url "order" id=order.id %}">{{ order.status }}</a></td>
+
+
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

@@ -21,7 +21,7 @@ class CartItem(models.Model):
 
 
 class Cart(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     items = models.ManyToManyField(Item, through=CartItem)
 
 
@@ -37,3 +37,15 @@ class UserProfile(models.Model):
     name = models.CharField(max_length=150)
     address = models.CharField(max_length=150)
     email = models.EmailField()
+
+
+class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    phone_number = models.CharField(max_length=150)
+    name = models.CharField(max_length=150)
+    address = models.CharField(max_length=150)
+    email = models.EmailField()
+    extra_info = models.EmailField()
+    date = models.DateField()
+    status = models.CharField(max_length=100)
+    cart = models.ForeignKey('Cart', on_delete=models.CASCADE)

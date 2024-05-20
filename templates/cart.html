@@ -1,0 +1,43 @@
+{% extends 'Main.html' %}
+{% block content %}
+    {% load static %}
+    <div class="container ">
+        <div class="row">
+            <div class=" p-3 shadow" style="background-color: red">
+                <h1>Ваша корзина</h1>
+
+                <table class="table table-info table-responsive align-middle">
+                    <thead>
+                    <tr>
+                        <th colspan="2">Товар</th>
+                        <th>Количество</th>
+                        <th>Цена</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in uci %}
+
+                        <tr>
+                            <td style="width: 100px"><img src="{{ item.item.image.url }}" height="100" alt=""></td>
+                            <td>{{ item.item.name }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>{{ item.item.price }}</td>
+
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                    <tfooter>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Итого:{{ ucs|floatformat:2 }}</td>
+                    </tfooter>
+
+                </table>
+
+                <a href="{% url 'checkout' %}" class="btn btn-success">Перейти к оформлению</a>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

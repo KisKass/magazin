@@ -1,0 +1,60 @@
+{% extends 'Main.html' %}
+{% block content %}
+    {% load static %}
+    <div class="container ">
+        <div class="row">
+            <div class=" p-3 shadow">
+                <h1>Информация о заказе</h1>
+
+                <dl class="row">
+                    <dt class="col-sm-3">Имя</dt>
+                    <dd class="col-sm-9">{{ order.name }}</dd>
+                    <dt class="col-sm-3">Адрес</dt>
+                    <dd class="col-sm-9">{{ order.address }}</dd>
+                    <dt class="col-sm-3">Номер телефона</dt>
+                    <dd class="col-sm-9">{{ order.phone_number }}</dd>
+                    <dt class="col-sm-3">Адрес электронной почты</dt>
+                    <dd class="col-sm-9">{{ order.email }}</dd>
+                    <dt class="col-sm-3">Дополнительная инфомация</dt>
+                    <dd class="col-sm-9">{{ order.extra_info }}</dd>
+                    <dt class="col-sm-3">Дата заказа</dt>
+                    <dd class="col-sm-9">{{ order.date }}</dd>
+                    <dt class="col-sm-3">Статус заказа</dt>
+                    <dd class="col-sm-9">{{ order.status }}</dd>
+
+                </dl>
+                <table class="table table-info table-responsive align-middle">
+                    <thead>
+                    <tr>
+                        <th colspan="2">Товар</th>
+                        <th>Количество</th>
+                        <th>Цена</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in uci %}
+
+                        <tr>
+                            <td style="width: 100px"><img src="{{ item.item.image.url }}" height="100" alt=""></td>
+                            <td>{{ item.item.name }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>{{ item.item.price }}</td>
+
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                    <tfooter>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Итого:{{ ucs|floatformat:2 }}</td>
+                    </tfooter>
+
+                </table>
+
+
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

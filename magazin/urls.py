@@ -26,10 +26,14 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('catalog/', views.catalog, name='catalog'),
     path('item/<int:id>', views.item, name='item'),
-    path('service/', views.service, name='service'),
-    path('profile/', views.profile, name='profile'),
-    path('login', views.login, name="login"),
-    path('logout', views.logout, name='logout'),
+    path('order/<int:id>', views.order, name='order'),
+    path('service/', views.service, name='service'),#
+    path('profile/', views.profile, name='profile'),#
+    path('cart/', views.cart, name='cart'),
+    path('checkout/', views.checkout, name='checkout'),
+    path('orders/', views.orders, name='orders'),
+    path('login', views.login, name="login"),#
+    path('logout', views.logout, name='logout'),#
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

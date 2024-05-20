@@ -1,0 +1,72 @@
+{% extends 'Main.html' %}
+{% block content %}
+    {% load static %}
+    <div class="container ">
+        <div class="row">
+            <div class=" p-3 shadow">
+                <h1>Оформление заказа</h1>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Имя</label>
+                        <input type="text" name="name" class="form-control" id="exampleFormControlInput1"
+                               placeholder="Иванов Иван Иванович">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Адрес электронной почты</label>
+                        <input type="email" name="email" class="form-control" id="exampleFormControlInput1"
+                               placeholder="name@example.com">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Номер телефона</label>
+                        <input type="text" name="phone" class="form-control" id="exampleFormControlInput1"
+                               placeholder="+375xxxxxxxxx">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Адрес</label>
+                        <input type="text" name="address" class="form-control" id="exampleFormControlInput1"
+                               placeholder="Адрес доставки">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">Дополнительная информация</label>
+                        <textarea name="extra" class="form-control" id="exampleFormControlTextarea1"
+                                  rows="3"></textarea>
+                    </div>
+
+                    <h2>Ваш заказ</h2>
+                    <table class="table table-info table-responsive align-middle">
+                        <thead>
+                        <tr>
+                            <th colspan="2">Товар</th>
+                            <th>Количество</th>
+                            <th>Цена</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in uci %}
+
+                            <tr>
+                                <td style="width: 100px"><img src="{{ item.item.image.url }}" height="100" alt=""></td>
+                                <td>{{ item.item.name }}</td>
+                                <td>{{ item.quantity }}</td>
+                                <td>{{ item.item.price }}</td>
+
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                        <tfooter>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>Итого:{{ ucs|floatformat:2 }}</td>
+                        </tfooter>
+
+                    </table>
+
+                    <button class="btn btn-success align-right">Оформить</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
