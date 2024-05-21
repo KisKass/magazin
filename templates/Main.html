@@ -12,62 +12,128 @@
 <body style="
   ">
 
-    <nav class="navbar navbar-expand-md navbar-dark  bg-dark" data-bs-theme="dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Carousel</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav me-auto mb-2 mb-md-0">
-                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">О компании</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'catalog' %}">Каталог</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Услуги</a></li>
+<nav class="navbar navbar-expand-md navbar-dark  bg-dark" data-bs-theme="dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Мекран</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">О компании</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'catalog' %}">Каталог</a></li>
+
+                {% if  user.is_authenticated %}
                     <li class="nav-item"><a class="nav-link" href="{% url 'orders' %}">Мои заказы</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'cart' %}">Корзина</a></li>
-                    <li class="nav-item"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Войти
-</button></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Выход</a></li>
-                </ul>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-            </div>
+
+                {% endif %}
+
+
+            </ul>
+            <form class="d-flex">
+                {% if  user.is_authenticated %}
+
+                    <li class="nav-item"><a class="btn btn-primary" href="{% url 'logout' %}">Выход</a></li>
+                {% else %}
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
+                            Войти
+                        </button>
+                    </li>
+                {% endif %}
+            </form>
         </div>
-    </nav>
+    </div>
+</nav>
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-        <form action="{% url 'login' %}" method="post">
-            {% csrf_token %}
-               <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-          <input type="submit" value="adsdasdasd">
-      </div>
-        </form>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Авторизация</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{% url 'login' %}" method="post">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Адрес электронной почты</label>
+                        <input type="text" name="username" class="form-control" id="exampleFormControlInput1"
+                               placeholder="name@example.com">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Пароль</label>
+                        <input type="password" name="password" class="form-control" id="exampleFormControlInput1"
+                               placeholder="">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
 
+                        <input type="submit" class="btn btn-primary" value="Войти">
+                    </div>
+                </div>
+            </form>
+
+        </div>
     </div>
-  </div>
 </div>
 
-<main >
+<main>
 
-                {% block content %}
-                {% endblock %}
+    {% block content %}
+    {% endblock %}
+<footer class=" fixed-bottom d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+    <div class="col-md-4 ms-3 d-flex flex-column ">
 
-    <footer></footer>
+      <div class="mb-3  mb-md-0 text-body-secondary">© 2024 ЧТПУП Мекран</div>
+    </div>
+
+
+  </footer>
+{#    <footer>#}
+{#        <div class="card-content content-in-card">#}
+{##}
+{##}
+{#            <h2>Мекран ЧТПУП</h2>#}
+{#            <ul class="addr cont">#}
+{#                <li style="list-style: none;">#}
+{##}
+{#                    <a class="arrd_list" rel="nofollow">225404, Барановичи, Чурилина, 13Б/1</a>#}
+{#                </li>#}
+{#            </ul>#}
+{##}
+{##}
+{#            <ul class="phones cont">#}
+{#                <li style="list-style: none;">#}
+{#                    <a data_href_value="tel:+375163644033" data_real_phone="+375 (163) 64 40 33" data_phone_id="164229"#}
+{#                       class="js_hide_phone phone_style" rel="nofollow" href="tel:+375163644033">+375 (163) 64 40 33</a>#}
+{#                    <span class="text-grey">(тел.)</span>#}
+{#                </li>#}
+{#                <li style="list-style: none;">#}
+{#                    <a data_href_value="tel:+375295223740" data_real_phone="+375 (29) 522 37 40" data_phone_id="219401"#}
+{#                       class="js_hide_phone phone_style" rel="nofollow" href="tel:+375295223740">+375 (29) 522 37 40</a>#}
+{#                    <span class="text-grey">(тел.)</span>#}
+{#                </li>#}
+{#                <li style="list-style: none;">#}
+{#                    <a data_href_value="tel:+375296456118" data_real_phone="+375 (29) 645 61 18" data_phone_id="259699"#}
+{#                       class="js_hide_phone phone_style" rel="nofollow" href="tel:+375296456118">+375 (29) 645 61 18</a>#}
+{#                    <span class="text-grey">(тел.)</span>#}
+{#                </li>#}
+{#            </ul>#}
+{#            <ul>#}
+{#                <li style="list-style: none;">#}
+{#                    УНП: 290506196#}
+{#                </li>#}
+{#            </ul>#}
+{##}
+{##}
+{#            <div class="filter">#}
+{#            </div>#}
+{#        </div>#}
+{#    </footer>#}
 </main>
 
 </body>

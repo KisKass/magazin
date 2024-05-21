@@ -1,5 +1,49 @@
 {% extends 'Main.html' %}
 {% block content %}
+  <script src="https://api-maps.yandex.ru/v3/?apikey=3e2764a7-963b-44eb-879f-f5e1e33d2cf2
+&lang=ru_RU"></script>
+    <div class="container p-3 mt-3 shadow">
+        <div class="row">
+            <div class="col">
+<div class="card">
+				<div class="card-content">
+					<h2>Схема проезда</h2>
 
-    инфа о компании
+					<div id="map" style="width: 600px; height: 400px"></div>
+
+                    <script>
+                        initMap();
+
+async function initMap() {
+    // Промис `ymaps3.ready` будет зарезолвлен, когда загрузятся все компоненты основного модуля API
+    await ymaps3.ready;
+
+    const {YMap, YMapDefaultSchemeLayer} = ymaps3;
+
+    // Иницилиазируем карту
+    const map = new YMap(
+        // Передаём ссылку на HTMLElement контейнера
+        document.getElementById('map'),
+
+        // Передаём параметры инициализации карты
+        {
+            location: {
+                // Координаты центра карты
+                center: [26.805487, 51.793473],
+
+                // Уровень масштабирования
+                zoom: 10
+            }
+        }
+    );
+
+    // Добавляем слой для отображения схематической карты
+    map.addChild(new YMapDefaultSchemeLayer());
+}
+                    </script>
+				</div>
+			</div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

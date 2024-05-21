@@ -1,25 +1,39 @@
 {% extends 'base_item.html' %}
 {% block item_content %}
-{% load static %}
-    <div class="bg-info">
-        <h1>{{ item.name}}</h1>
-        <div class="d-flex">
-            <div><img src="{{ item.image.url }}"
-                 alt="" height="150"></div>
-          <div> info
-              <form action="" method="post">
-                  {% csrf_token %}
-                  <label for="">Количествo: </label>
-                  <input type="number" name="quantity" class="form-input">
-                      <button class="btn btn-danger"> Добавить в корзину</button>
-              </form>
+    {% load static %}
+    <div class="shadow p-3 mt-3 mb-3">
+        <h1>{{ item.name }}</h1>
+        <div class="row">
+            <div class="col-auto">
+                <img src="{{ item.image.url }}"
+                     alt="" height="150">
+            </div>
+            <div class="col">
+                <form action="" method="post">
+                    {% csrf_token %}
+
+                    <div class="row g-1">
+                        <div class="col-auto">
+                            <h4>Цена: {{ item.price }} руб. </h4>
+                        </div>
+                    </div>
+                    <div class="row g-1 mb-3">
+                        <div class="col-auto"><label for="" class="col-form-label">Количествo: </label></div>
+                        <div class="col-auto"><input type="number" name="quantity" class="form-control"></div>
+                        <div class="col-auto"> <button class="btn btn-success"> Добавить в корзину</button></div>
+                    </div>
 
 
-          </div>
+                </form>
+
+
+            </div>
 
         </div>
 
-      <div>{{ item.description }}</div>
+        <div><h4>Описание товара</h4>
+            {{ item.description }}
+        </div>
 
     </div>
 {% endblock %}

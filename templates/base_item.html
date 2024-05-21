@@ -1,23 +1,26 @@
 {% extends 'Main.html' %}
 {% block content %}
     {% load static %}
-    <div class="container " >
+    <div class="container ">
         <div class="row">
-            <div class="col-3 p-3 shadow" style="background-color: red">
-                <div class="list-group list-group-flush bg-dark-subtle p-3 mb-3" >
-                    <a href="#" class="list-group-item list-group-item-action active bg-transparent" aria-current="true">
-                        The current link item
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action bg-transparent">A second link item</a>
-                    <a href="#" class="list-group-item list-group-item-action bg-transparent">A third link item</a>
-                    <a href="#" class="list-group-item list-group-item-action bg-transparent">A fourth link item</a>
+            <div class="col-3 p-3 mt-3 shadow h-50">
+                <div class="list-group list-group-flush">
+                    <h3>Категории</h3>
+                    {% for cat in cats %}
+                        <a href="{% url 'cat' cat_id=cat.id %}"
+                           class="list-group-item list-group-item-action {% if cat.id == current_id %}active{% endif %} ">
+                            {{ cat.name }}
+                        </a>
+                    {% endfor %}
+
+
                 </div>
             </div>
             <div class="col">
 
 
-               {% block item_content %}
-               {% endblock %}
+                {% block item_content %}
+                {% endblock %}
 
 
             </div>

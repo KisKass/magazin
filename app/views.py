@@ -1,18 +1,17 @@
 import datetime
 from pprint import pprint
 
+from django.contrib.auth import logout, authenticate, login
 from django.db.models import Sum
 from django.shortcuts import render, redirect
 
-from app.models import Item, Cart, CartItem, Order
+from app.models import Item, Cart, CartItem, Order, Category
 
 
 # Create your views here.
 
 
-
 def home(request):
-
     return render(request, 'home.html')
 
 
@@ -20,11 +19,13 @@ def item(request, id):
     item_obj = Item.objects.get(pk=id)
     context = {
         'item': item_obj,
+        'cats': Category.objects.all(),
+        'current_id': item_obj.category_id
     }
     if request.POST:
         pprint(request.POST)
         current_user_cart = Cart.objects.get_or_create(user=request.user)
-        current_user_cart.items.add(item_obj, through_defaults={'quantity': request.POST['quantity']})
+        current_user_cart[0].items.add(item_obj, through_defaults={'quantity': request.POST['quantity']})
     return render(request, 'item.html', context)
 
 
@@ -44,6 +45,7 @@ def checkout(request):
             date=datetime.date.today()
         )
         new_order.save()
+        user_cart.user=None
         return redirect('orders')
 
     user_cart_items = CartItem.objects.filter(cart=user_cart)
@@ -82,20 +84,29 @@ def profile():
     pass
 
 
-def catalog(request):
-    return render(request, 'item_catalog.html')
+def catalog(request, cat_id=None):
+    cats = Category.objects.all()
+    if cat_id:
+        print('here')
+        items = Item.objects.filter(category_id=cat_id)
+    else:
+        items = Item.objects.all()
 
+    context = {
+        'cats': cats,
+        'items': items,
+        'current_id': cat_id
+    }
+    return render(request, 'item_catalog.html', context)
 
-def service():
-    pass
 
 
 def cart(request):
-    user_cart = Cart.objects.get(user=request.user.pk)
-    user_cart_items = CartItem.objects.filter(cart=user_cart)
+    user_cart = Cart.objects.get_or_create(user_id=request.user.pk)
+    user_cart_items = CartItem.objects.filter(cart=user_cart[0])
     cart_sum = user_cart_items.aggregate(Sum('item__price'))
     print(cart_sum['item__price__sum'])
-    context = {'uc': user_cart,
+    context = {'uc': user_cart[0],
                'uci': user_cart_items,
                'ucs': cart_sum['item__price__sum'],
 
@@ -103,11 +114,18 @@ def cart(request):
     return render(request, 'cart.html', context)
 
 
-def login(request):
+def login_v(request):
     if request.POST:
-        pprint(request.META['HTTP_REFERER'])
+        print(request.POST)
+        user = authenticate(username=request.POST['username'], password=request.POST['password'])
+        if user is not None:
+            login(request, user)
+            redirect(request.META.get('HTTP_REFERER'))
+        else:
+            redirect(request.META.get('HTTP_REFERER'))
     return redirect(request.META.get('HTTP_REFERER'))
 
 
-def logout():
-    pass
+def logout_v(request):
+    logout(request)
+    return redirect(request.META.get('HTTP_REFERER'))
