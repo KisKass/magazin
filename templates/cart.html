@@ -25,7 +25,7 @@
                                 <td style="width: 100px"><img src="{{ item.item.image.url }}" height="100" alt=""></td>
                                 <td>{{ item.item.name }}</td>
                                 <td>{{ item.quantity }}</td>
-                                <td>{{ item.item.price }}</td>
+                                <td>{{ item.item.price }} руб.</td>
 
                             </tr>
                         {% endfor %}
@@ -34,7 +34,7 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td>Итого:{{ ucs|floatformat:2 }}</td>
+                            <td>Итого: {{ ucs|floatformat:2 }} руб.</td>
                         </tfooter>
 
                     </table>
